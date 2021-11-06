@@ -30,13 +30,13 @@ def connect_to_tpu(tpu_address: str = None):
 
 
 AUTO = tf.data.experimental.AUTOTUNE
-GCS_DS_Path = KaggleDatasets().get_gcs_path('tpu-getting-started')
+GCS_DS_Path = "jg-tpubucket"
 print(GCS_DS_Path)
 IMAGE_SIZE = [224, 224]
-GCS_PATH = GCS_DS_Path + '/tfrecords-jpeg-224x224'
-training_file = tf.io.gfile.glob(GCS_PATH + '/train/*.tfrec')
-test_file = tf.io.gfile.glob(GCS_PATH + '/test/*.tfrec')
-valid_file = tf.io.gfile.glob(GCS_PATH + '/val/*.tfrec')
+GCS_PATH = GCS_DS_Path + '/tf-records'
+training_file = tf.io.gfile.glob(GCS_PATH + '/train/*')
+# test_file = tf.io.gfile.glob(GCS_PATH + '/test/*')
+valid_file = tf.io.gfile.glob(GCS_PATH + '/images-50000/*')
 
 
 def decode_image(image_data):
