@@ -108,7 +108,7 @@ def get_test_dataset(ordered=False):
 
 strategy = connect_to_tpu('jg-tpu')
 
-BATCH_SIZE = 16 * strategy.num_replicas_in_sync
+BATCH_SIZE = 512
 
 print('inference batch size: ', BATCH_SIZE)
 
