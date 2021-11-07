@@ -78,7 +78,7 @@ def load_dataset(filenames, labeled=True, ordered=False):
                                       num_parallel_reads=AUTO)  # automatically interleaves reads from multiple files
     dataset = dataset.with_options(
         ignore_order)  # uses data as soon as it streams in, rather than in its original order
-    dataset = dataset.map(read_labeled_tfrecord if labeled else read_unlabeled_tfrecord, num_parallel_calls=AUTO)
+    dataset = dataset.map(read_labeled_tfrecord if labeled else read_unlabeled_tfrecord, tf.data.experimental.AUTOTUNE)
     # returns a dataset of (image, label) pairs if labeled=True or (image, id) pairs if labeled=False
     return dataset
 
