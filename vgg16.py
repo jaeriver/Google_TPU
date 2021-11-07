@@ -114,7 +114,7 @@ print('inference batch size: ', BATCH_SIZE)
 
 ds_train = get_training_dataset()
 ds_valid = get_validation_dataset()
-ds_test = get_test_dataset()
+ds_test = get_validation_dataset()
 ds_iter = iter(ds_train.unbatch().batch(20))
 one_batch = next(ds_iter)
 
