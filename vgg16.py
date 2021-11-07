@@ -100,10 +100,10 @@ def get_validation_dataset(ordered=False):
     return dataset
 
 
-def get_test_dataset(ordered=False):
-    dataset = load_dataset(test_file, labeled=False, ordered=ordered)
-    dataset = dataset.batch(BATCH_SIZE)
-    return dataset
+# def get_test_dataset(ordered=False):
+#     dataset = load_dataset(test_file, labeled=False, ordered=ordered)
+#     dataset = dataset.batch(BATCH_SIZE)
+#     return dataset
 
 
 strategy = connect_to_tpu('jg-tpu')
