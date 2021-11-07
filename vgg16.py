@@ -53,6 +53,7 @@ def read_labeled_tfrecord(example):
     example = tf.io.parse_single_example(example, LABELED_TFREC_FORMAT)
     image = decode_image(example['image'])
     label = tf.cast(example['class'], tf.int32)
+    print('read_labeled')
     print('image',image)
     print('label',label)
     return image, label  # returns a dataset of (image, label) pairs
