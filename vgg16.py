@@ -61,7 +61,7 @@ def read_labeled_tfrecord(example):
 
 def read_unlabeled_tfrecord(example):
     UNLABELED_TFREC_FORMAT = {
-        "image": tf.io.FixedLenFeature([], tf.string),  # tf.string means bytestring
+        "image": tf.io.FixedLenFeature([], tf.string,''),  # tf.string means bytestring
         "id": tf.io.FixedLenFeature([], tf.string),  # shape [] means single element
         # class is missing, this competitions's challenge is to predict flower classes for the test dataset
     }
