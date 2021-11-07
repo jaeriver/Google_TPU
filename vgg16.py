@@ -111,6 +111,8 @@ strategy = connect_to_tpu('jg-tpu')
 
 BATCH_SIZE = 16 * strategy.num_replicas_in_sync
 
+print('inference batch size: ', BATCH_SIZE)
+
 ds_train = get_training_dataset()
 ds_valid = get_validation_dataset()
 ds_test = get_test_dataset()
@@ -156,14 +158,14 @@ model.compile(
     metrics=['sparse_categorical_accuracy'],
 )
 
-NUM_TRAINING_IMAGES = 12753
-NUM_TEST_IMAGES = 7382
+NUM_TRAINING_IMAGES = 12000
+NUM_TEST_IMAGES = 50000
 STEPS_PER_EPOCH = NUM_TRAINING_IMAGES // BATCH_SIZE
 
 history = model.fit(
     ds_train,
     validation_data=ds_valid,
-    epochs=50, steps_per_epoch=STEPS_PER_EPOCH
+    epochs=5, steps_per_epoch=STEPS_PER_EPOCH
 )
 
 test_ds = get_test_dataset(ordered=True)
