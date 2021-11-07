@@ -48,7 +48,7 @@ def decode_image(image_data):
 def read_labeled_tfrecord(example):
     LABELED_TFREC_FORMAT = {
         "image": tf.io.FixedLenFeature([], tf.string),  # tf.string means bytestring
-        "class": tf.io.FixedLenFeature([], tf.int64),  # shape [] means single element
+        "class": tf.io.FixedLenFeature([1], tf.int64,-1),  # shape [] means single element
     }
     example = tf.io.parse_single_example(example, LABELED_TFREC_FORMAT)
     image = decode_image(example['image'])
