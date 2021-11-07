@@ -2,7 +2,6 @@ import numpy as np
 import tensorflow as tf
 import keras
 import keras.layers as L
-from kaggle_datasets import KaggleDatasets
 
 
 def connect_to_tpu(tpu_address: str = None):
