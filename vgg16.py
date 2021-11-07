@@ -106,7 +106,7 @@ def get_validation_dataset(ordered=False):
 #     return dataset
 
 
-strategy = connect_to_tpu('jg-tpu')
+cluster_resolver, strategy = connect_to_tpu('jg-tpu')
 
 BATCH_SIZE = 512
 
