@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
-from tensorflow import keras
-import tensorflow.keras.layers as L
+import keras
+import keras.layers as L
 
 
 def connect_to_tpu(tpu_address: str = None):
