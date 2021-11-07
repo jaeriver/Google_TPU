@@ -32,7 +32,7 @@ AUTO = tf.data.experimental.AUTOTUNE
 GCS_DS_Path = "jg-tpubucket"
 print(GCS_DS_Path)
 IMAGE_SIZE = [224, 224]
-GCS_PATH = GCS_DS_Path + '/tf-records'
+GCS_PATH = GCS_DS_Path + '/tf-record'
 training_file = tf.io.gfile.glob(GCS_PATH + '/train/*')
 # test_file = tf.io.gfile.glob(GCS_PATH + '/test/*')
 valid_file = tf.io.gfile.glob(GCS_PATH + '/images-50000/*')
@@ -157,7 +157,7 @@ model.compile(
     metrics=['sparse_categorical_accuracy'],
 )
 
-NUM_TRAINING_IMAGES = 12000
+NUM_TRAINING_IMAGES = 120000
 NUM_TEST_IMAGES = 50000
 STEPS_PER_EPOCH = NUM_TRAINING_IMAGES // BATCH_SIZE
 
