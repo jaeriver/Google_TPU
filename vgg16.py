@@ -167,8 +167,8 @@ history = model.fit(
     validation_data=ds_valid,
     epochs=5, steps_per_epoch=STEPS_PER_EPOCH
 )
-
-test_ds = get_test_dataset(ordered=True)
+model.save('vgg16')
+test_ds = get_validation_dataset(ordered=True)
 
 print('Computing predictions...')
 test_images_ds = test_ds.map(lambda image, idnum: image)
