@@ -108,7 +108,7 @@ def get_validation_dataset(ordered=False):
 
 cluster_resolver, strategy = connect_to_tpu('jg-tpu')
 
-BATCH_SIZE = 512
+BATCH_SIZE = 12 * strategy.num_replicas_in_sync
 
 print('inference batch size: ', BATCH_SIZE)
 
