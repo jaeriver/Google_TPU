@@ -29,7 +29,7 @@ def connect_to_tpu(tpu_address: str = None):
 
 
 AUTO = tf.data.experimental.AUTOTUNE
-GCS_DS_Path = "jg-tpubucket"
+GCS_DS_Path = "gs://jg-tpubucket"
 print(GCS_DS_Path)
 IMAGE_SIZE = [224, 224]
 GCS_PATH = GCS_DS_Path + '/tf-record'
