@@ -51,7 +51,7 @@ def val_preprocessing(record):
         image = tf.image.resize_with_crop_or_pad(image, 224, 224)
 
     label = tf.cast(label, tf.int32)
-    image = models[model_type].preprocess_input(image)
+    
     image = tf.cast(image, tf.float32)
     return image, label
 
