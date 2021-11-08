@@ -53,6 +53,8 @@ def read_labeled_tfrecord(example):
     obj = tf.io.parse_single_example(example, features=feature_map)
     imgdata = obj['image/encoded']
     label = tf.cast(obj['image/class/label'], tf.int32)
+    label_text = tf.cast(obj['image/class/text'], tf.string)
+    label_synset = tf.cast(obj['image/class/synset'], tf.string)   
     return imgdata, label
 
 
