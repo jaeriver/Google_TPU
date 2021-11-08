@@ -88,8 +88,7 @@ def get_training_dataset():
     dataset = dataset.repeat()  # the training dataset must repeat for several epochs
     dataset = dataset.shuffle(2048)
     dataset = dataset.batch(BATCH_SIZE)
-    dataset = dataset.prefetch(buffer_size=tf.data.experimental.AUTOTUNE)
-    dataset = dataset.repeat(count=1)
+    print('dataset',dataset)
     return dataset
 
 
