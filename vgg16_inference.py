@@ -14,7 +14,7 @@ assert PROJECT, 'For this part, you need a GCP project. Head to http://console.c
 assert re.search(r'gs://.+', BUCKET), 'For this part, you need a GCS bucket. Head to http://console.cloud.google.com/storage and create one.'
 
 model_type = 'vgg16'
-batch_size = [128,256]
+batch_list = [128,256]
 
 def deserialize_image_record(record):
     feature_map = {'image/encoded': tf.io.FixedLenFeature([], tf.string, ''),
