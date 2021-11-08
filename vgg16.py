@@ -47,15 +47,37 @@ def decode_image(image_data):
 
 def read_labeled_tfrecord(example):
     feature_map = {'image/encoded': tf.io.FixedLenFeature([], tf.string, ''),
-                  'image/class/label': tf.io.FixedLenFeature([1], tf.int64, -1),
-                  'image/class/text': tf.io.FixedLenFeature([], tf.string, ''),
-                  'image/class/synset' : tf.io.FixedLenFeature([], tf.string, '')}
+                  'image/class/label': tf.io.FixedLenFeature([1], tf.int64, -1)}
+    
     obj = tf.io.parse_single_example(example, features=feature_map)
     imgdata = obj['image/encoded']
     label = tf.cast(obj['image/class/label'], tf.int32)
-    label_text = tf.cast(obj['image/class/text'], tf.string)
-    label_synset = tf.cast(obj['image/class/synset'], tf.string)   
-    return imgdata, label, label_text, label_synset
+
+    label -= 1
+    
+    image = tf.io.decode_jpeg(imgdata, channels=3, 
+                              fancy_upscaling=False, 
+                              dct_method='INTEGER_FAST')
+
+    shape = tf.shape(image)
+    height = tf.cast(shape[0], tf.float32)
+    width = tf.cast(shape[1], tf.float32)
+    side = tf.cast(tf.convert_to_tensor(256, dtype=tf.int32), tf.float32)
+
+    scale = tf.cond(tf.greater(height, width),
+                  lambda: side / width,
+                  lambda: side / height)
+    
+    new_height = tf.cast(tf.math.rint(height * scale), tf.int32)
+    new_width = tf.cast(tf.math.rint(width * scale), tf.int32)
+    
+    image = tf.image.resize(image, [new_height, new_width], method='bicubic')
+    
+    image = tf.image.resize_with_crop_or_pad(image, 224, 224)
+
+    label = tf.cast(label, tf.int32)
+    image = tf.cast(image, tf.float32)
+    return image, label
 
 
 def read_unlabeled_tfrecord(example):
