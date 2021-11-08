@@ -191,7 +191,7 @@ history = model.fit(
     validation_data=ds_valid,
     epochs=5, steps_per_epoch=STEPS_PER_EPOCH
 )
-model.save('gsutil://jg-tpubucket/tpu_model/vgg16')
+model.save('gs://jg-tpubucket/tpu_model/vgg16')
 test_ds = get_validation_dataset(ordered=True)
 
 print('Computing predictions...')
