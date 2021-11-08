@@ -133,7 +133,7 @@ def get_validation_dataset(ordered=False):
 
 cluster_resolver, strategy = connect_to_tpu('jg-tpu')
 
-BATCH_SIZE = 12 * strategy.num_replicas_in_sync
+BATCH_SIZE = 128 * strategy.num_replicas_in_sync
 
 print('inference batch size: ', BATCH_SIZE)
 
@@ -191,7 +191,7 @@ history = model.fit(
     validation_data=ds_valid,
     epochs=5, steps_per_epoch=STEPS_PER_EPOCH
 )
-model.save('vgg16')
+model.save('gsutil://jg-tpubucket/tpu_model/vgg16')
 test_ds = get_validation_dataset(ordered=True)
 
 print('Computing predictions...')
