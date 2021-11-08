@@ -5,6 +5,8 @@ import tensorflow as tf
 import pandas as pd
 from matplotlib import pyplot as plt
 from tensorflow.keras.models import load_model
+import sys
+import argparse
 
 PROJECT = "jg-project-328708" #@param {type:"string"}
 BUCKET = "gs://jg-tpubucket"  #@param {type:"string", default:"jddj"}
@@ -13,8 +15,13 @@ MODEL_VERSION = "v1" #@param {type:"string"}
 assert PROJECT, 'For this part, you need a GCP project. Head to http://console.cloud.google.com/ and create one.'
 assert re.search(r'gs://.+', BUCKET), 'For this part, you need a GCS bucket. Head to http://console.cloud.google.com/storage and create one.'
 
+parser = argparse.ArgumentParser()
+parser.add_argument('-l', '--batch_list',
+                      nargs='+',
+                      required=True)
+
 model_type = 'vgg16'
-batch_list = [128,256]
+batch_list = parser.parse_args().batch_list
 
 def deserialize_image_record(record):
     feature_map = {'image/encoded': tf.io.FixedLenFeature([], tf.string, ''),
