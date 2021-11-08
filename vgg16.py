@@ -55,7 +55,7 @@ def read_labeled_tfrecord(example):
     label = tf.cast(obj['image/class/label'], tf.int32)
     label_text = tf.cast(obj['image/class/text'], tf.string)
     label_synset = tf.cast(obj['image/class/synset'], tf.string)   
-    return imgdata, label
+    return imgdata, label, label_text, label_synset
 
 
 def read_unlabeled_tfrecord(example):
