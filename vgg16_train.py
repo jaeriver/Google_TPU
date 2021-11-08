@@ -192,25 +192,3 @@ history = model.fit(
     epochs=5, steps_per_epoch=STEPS_PER_EPOCH
 )
 model.save('gs://jg-tpubucket/tpu_model/vgg16')
-test_ds = get_validation_dataset(ordered=True)
-
-print('Computing predictions...')
-test_images_ds = test_ds.map(lambda image, idnum: image)
-probabilities = model.predict(test_images_ds)
-predictions = np.argmax(probabilities, axis=-1)
-print(predictions)
-
-print('Generating submission.csv file...')
-
-# Get image ids from test set and convert to unicode
-test_ids_ds = test_ds.map(lambda image, idnum: idnum).unbatch()
-test_ids = next(iter(test_ids_ds.batch(NUM_TEST_IMAGES))).numpy().astype('U')
-
-np.savetxt(
-    'submission.csv',
-    np.rec.fromarrays([test_ids, predictions]),
-    fmt=['%s', '%d'],
-    delimiter=',',
-    header='id,label',
-    comments='',
-)
