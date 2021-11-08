@@ -47,7 +47,9 @@ def decode_image(image_data):
 
 def read_labeled_tfrecord(example):
     feature_map = {'image/encoded': tf.io.FixedLenFeature([], tf.string, ''),
-                  'image/class/label': tf.io.FixedLenFeature([1], tf.int64, -1)}
+                  'image/class/label': tf.io.FixedLenFeature([1], tf.int64, -1),
+                  'image/class/text': tf.io.FixedLenFeature([], tf.string, ''),
+                  'image/class/synset' : tf.io.FixedLenFeature([], tf.string, '')}
     obj = tf.io.parse_single_example(example, features=feature_map)
     imgdata = obj['image/encoded']
     label = tf.cast(obj['image/class/label'], tf.int32)
