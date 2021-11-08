@@ -67,6 +67,29 @@ def get_dataset(batch_size, use_cache=False):
     
     return dataset
 
+def connect_to_tpu(tpu_address: str = None):
+    if tpu_address is not None:  # When using GCP
+        cluster_resolver = tf.distribute.cluster_resolver.TPUClusterResolver(
+            tpu=tpu_address)
+        if tpu_address not in ("", "local"):
+            tf.config.experimental_connect_to_cluster(cluster_resolver)
+        tf.tpu.experimental.initialize_tpu_system(cluster_resolver)
+        strategy = tf.distribute.experimental.TPUStrategy(cluster_resolver)
+        print("Running on TPU ", cluster_resolver.master())
+        print("REPLICAS: ", strategy.num_replicas_in_sync)
+        return cluster_resolver, strategy
+    else:                           # When using Colab or Kaggle
+        try:
+            cluster_resolver = tf.distribute.cluster_resolver.TPUClusterResolver.connect()
+            strategy = tf.distribute.experimental.TPUStrategy(cluster_resolver)
+            print("Running on TPU ", cluster_resolver.master())
+            print("REPLICAS: ", strategy.num_replicas_in_sync)
+            return cluster_resolver, strategy
+        except:
+            print("WARNING: No TPU detected.")
+            mirrored_strategy = tf.distribute.MirroredStrategy()
+            return None, mirrored_strategy
+        
 def tpu_inference(model_type, batch_size):
     # Google TPU VM
     cluster_resolver, tpu_strategy = connect_to_tpu('jg-tpu')
