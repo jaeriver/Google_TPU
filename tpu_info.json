@@ -3,5 +3,7 @@
   "train_file" : "your train file path/*",
   "test_file" : "your test file path/*",
   "valid_file" : "your valid file path/*",
-  "TPU_NAME" : "your tpu name"
+  "TPU_NAME" : "your tpu name",
+  "tpu_model_path" : "your tpu model path to save or load",
+  "GCP_PROJECT": "your gcp project name"
 }

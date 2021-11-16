@@ -196,4 +196,4 @@ history = model.fit(
     validation_data=ds_valid,
     epochs=5, steps_per_epoch=STEPS_PER_EPOCH
 )
-model.save('gs://jg-tpubucket/tpu_model/vgg16')
+model.save(GCS_DS_Path + config.tpu_model_path + 'vgg16')
