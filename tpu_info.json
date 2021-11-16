@@ -1,0 +1,7 @@
+{
+  "GCS_DS_PATH": "your GCS bucket path",
+  "train_file" : "your train file path/*",
+  "test_file" : "your test file path/*",
+  "valid_file" : "your valid file path/*",
+  "TPU_NAME" : "your tpu name"
+}

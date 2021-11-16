@@ -2,6 +2,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 import tensorflow.keras.layers as L
+import json
 
 
 def connect_to_tpu(tpu_address: str = None):
@@ -28,14 +29,16 @@ def connect_to_tpu(tpu_address: str = None):
             return None, mirrored_strategy
 
 
+# get tpu name, dataset bucket, etc... from tpu_info.json
+config = json.loads(open('tpu_info.json', 'r').read())
+
 AUTO = tf.data.experimental.AUTOTUNE
-GCS_DS_Path = "gs://jg-tpubucket"
-print(GCS_DS_Path)
+GCS_DS_Path = config.GCS_DS_PATH
 IMAGE_SIZE = [224, 224]
-GCS_PATH = GCS_DS_Path + '/tf-record'
-training_file = tf.io.gfile.glob(GCS_PATH + '/train/*')
-# test_file = tf.io.gfile.glob(GCS_PATH + '/test/*')
-valid_file = tf.io.gfile.glob(GCS_PATH + '/images-50000/*')
+
+train_file = tf.io.gfile.glob(GCS_DS_Path + config.train_file)
+test_file = tf.io.gfile.glob(GCS_DS_Path + config.test_file)
+valid_file = tf.io.gfile.glob(GCS_DS_Path + config.valid_file)
 
 
 def decode_image(image_data):
@@ -47,16 +50,16 @@ def decode_image(image_data):
 
 def read_labeled_tfrecord(example):
     feature_map = {'image/encoded': tf.io.FixedLenFeature([], tf.string, ''),
-                  'image/class/label': tf.io.FixedLenFeature([1], tf.int64, -1)}
-    
+                   'image/class/label': tf.io.FixedLenFeature([1], tf.int64, -1)}
+
     obj = tf.io.parse_single_example(example, features=feature_map)
     imgdata = obj['image/encoded']
     label = tf.cast(obj['image/class/label'], tf.int32)
 
     label -= 1
-    
-    image = tf.io.decode_jpeg(imgdata, channels=3, 
-                              fancy_upscaling=False, 
+
+    image = tf.io.decode_jpeg(imgdata, channels=3,
+                              fancy_upscaling=False,
                               dct_method='INTEGER_FAST')
 
     shape = tf.shape(image)
@@ -65,14 +68,14 @@ def read_labeled_tfrecord(example):
     side = tf.cast(tf.convert_to_tensor(256, dtype=tf.int32), tf.float32)
 
     scale = tf.cond(tf.greater(height, width),
-                  lambda: side / width,
-                  lambda: side / height)
-    
+                    lambda: side / width,
+                    lambda: side / height)
+
     new_height = tf.cast(tf.math.rint(height * scale), tf.int32)
     new_width = tf.cast(tf.math.rint(width * scale), tf.int32)
-    
+
     image = tf.image.resize(image, [new_height, new_width], method='bicubic')
-    
+
     image = tf.image.resize_with_crop_or_pad(image, 224, 224)
 
     label = tf.cast(label, tf.int32)
@@ -82,7 +85,7 @@ def read_labeled_tfrecord(example):
 
 def read_unlabeled_tfrecord(example):
     UNLABELED_TFREC_FORMAT = {
-        "image": tf.io.FixedLenFeature([], tf.string,''),  # tf.string means bytestring
+        "image": tf.io.FixedLenFeature([], tf.string, ''),  # tf.string means bytestring
         "id": tf.io.FixedLenFeature([], tf.string),  # shape [] means single element
         # class is missing, this competitions's challenge is to predict flower classes for the test dataset
     }
@@ -110,11 +113,11 @@ def load_dataset(filenames, labeled=True, ordered=False):
 
 
 def get_training_dataset():
-    dataset = load_dataset(training_file, labeled=True)
+    dataset = load_dataset(train_file, labeled=True)
     dataset = dataset.repeat()  # the training dataset must repeat for several epochs
     dataset = dataset.shuffle(2048)
     dataset = dataset.batch(BATCH_SIZE)
-    print('dataset',dataset)
+    print('dataset', dataset)
     return dataset
 
 
@@ -125,10 +128,10 @@ def get_validation_dataset(ordered=False):
     return dataset
 
 
-# def get_test_dataset(ordered=False):
-#     dataset = load_dataset(test_file, labeled=False, ordered=ordered)
-#     dataset = dataset.batch(BATCH_SIZE)
-#     return dataset
+def get_test_dataset(ordered=False):
+    dataset = load_dataset(test_file, labeled=False, ordered=ordered)
+    dataset = dataset.batch(BATCH_SIZE)
+    return dataset
 
 
 cluster_resolver, strategy = connect_to_tpu('jg-tpu')
@@ -140,6 +143,8 @@ print('inference batch size: ', BATCH_SIZE)
 ds_train = get_training_dataset()
 ds_valid = get_validation_dataset()
 ds_test = get_validation_dataset()
+
+
 # ds_iter = iter(ds_train.unbatch().batch(20))
 # one_batch = next(ds_iter)
 
