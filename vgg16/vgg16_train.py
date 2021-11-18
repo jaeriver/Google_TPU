@@ -30,7 +30,7 @@ def connect_to_tpu(tpu_address: str = None):
 
 
 # get tpu name, dataset bucket, etc... from tpu_info.json
-config = json.loads(open('tpu_info.json', 'r').read())
+config = json.loads(open('../tpu_info.json', 'r').read())
 
 AUTO = tf.data.experimental.AUTOTUNE
 GCS_DS_Path = config.GCS_DS_PATH
