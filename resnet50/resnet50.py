@@ -55,7 +55,7 @@ flags.DEFINE_integer('num_cores', 8, 'Number of TPU cores.')
 # Imagenet training and test data sets.
 NUM_CLASSES = 1000
 IMAGE_SIZE = 224
-EPOCHS = 90  # Standard imagenet training regime.
+EPOCHS = 5  # Standard imagenet training regime.
 APPROX_IMAGENET_TRAINING_IMAGES = 1280000  # Approximate number of images.
 IMAGENET_VALIDATION_IMAGES = 50000  # Number of images.
 PER_CORE_BATCH_SIZE = 128
