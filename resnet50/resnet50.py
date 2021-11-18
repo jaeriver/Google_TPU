@@ -40,7 +40,7 @@ config = json.loads(open('../tpu_info.json', 'r').read())
 
 # Common flags for TPU models.
 flags.DEFINE_string('tpu', config['TPU_NAME'], 'Name of the TPU to use.')
-flags.DEFINE_string('data', config['train_file'], 'Path to training and testing data.')
+flags.DEFINE_string('data', config['GCS_DS_PATH'] + config['train_file'], 'Path to training and testing data.')
 flags.DEFINE_string(
     'model_dir', config['tpu_model_path'],
     ('The directory where the model weights and training/evaluation summaries '
