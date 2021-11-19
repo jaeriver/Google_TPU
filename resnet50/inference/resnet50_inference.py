@@ -8,7 +8,7 @@ from tensorflow.keras.models import load_model
 import sys
 import argparse
 import json
-config = json.loads(open('../tpu_info.json', 'r').read())
+config = json.loads(open('../../tpu_info.json', 'r').read())
 
 PROJECT = config.GCP_PROJECT  #@param {type:"string"}
 BUCKET = config.GCS_DS_PATH  #@param {type:"string", default:"jddj"}
