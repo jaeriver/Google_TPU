@@ -17,5 +17,4 @@ write your GCP information to use TPU
   delete tpu using gcloud
 - tpu_utilization.sh <br/>
   check tpu utilization using cloud-tpu-profiler
-  - to use
   ```pip install cloud-tpu-profiler```
