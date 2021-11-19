@@ -4,5 +4,8 @@
 - ResNet50
 - VGG16
 
+## Datasets
+- ImageNet2012 (type : tfrecord)
+
 ### tpu_info.json <br/>
 write your GCP information to use TPU
