@@ -1,22 +1,26 @@
-# Cloud TPUs #
+# Cloud TPU Port of the MobileNet v1 model
 
-This repository is a collection of reference models and tools used with
-[Cloud TPUs](https://cloud.google.com/tpu/).
+This is a straightforward port of the [MobileNet v1 model](https://arxiv.org/pdf/1704.04861.pdf).  The code was based on the original version from the [tensorflow/models](https://github.com/tensorflow/models/tree/master/research/slim/nets) repository.
 
-The fastest way to get started training a model on a Cloud TPU is by following
-the tutorial. Click the button below to launch the tutorial using Google Cloud
-Shell.
+The only adjustments have been to add the required code to enable using the 
+TPUEstimator interface, along with the data processing pipeline for ImageNet.
 
-[![Open in Cloud Shell](http://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?git_repo=https%3A%2F%2Fgithub.com%2Ftensorflow%2Ftpu&page=shell&tutorial=tools%2Fctpu%2Ftutorial.md)
+## Running the model
 
-_Note:_ This repository is a public mirror, pull requests will not be accepted.
-Please file an issue if you have a feature or bug request.
-
-## Running Models
-
-To run models in the `models` subdirectory, you may need to add the top-level
-`/models` folder to the Python path with the command:
+Assuming you have a version of ImageNet converted to the tfrecord format located
+at `gs://my-cloud-bucket/data/imagenet/`, you can run this model with the 
+following command:
 
 ```
-export PYTHONPATH="$PYTHONPATH:/path/to/models"
+python mobilenet.py\ 
+  --alsologtostderr\
+  --master=$TPU_WORKER\
+  --data_dir=gs://my-cloud-bucket/data/imagenet\
+  --model_dir=gs://my-cloud-bucket/models/mobilenet/v0\
+  --num_shards=8\
+  --batch_size=1024\
+  --use_tpu=1\
 ```
+
+Note that the mobilenet network requires a large number of epochs to converge
+completely.
