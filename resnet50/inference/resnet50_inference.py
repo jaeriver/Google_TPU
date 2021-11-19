@@ -22,7 +22,7 @@ parser.add_argument('-l', '--batch_list',
                       nargs='+',
                       required=True)
 
-model_type = 'vgg16'
+model_type = 'resnet50'
 batch_list = parser.parse_args().batch_list
 
 def deserialize_image_record(record):
