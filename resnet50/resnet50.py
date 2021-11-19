@@ -226,7 +226,7 @@ def main(unused_argv):
       validation_steps=validation_steps,
       validation_freq=5)
 
-  model_saving_utils.save_model(model, model_dir, WEIGHTS_TXT)
+  model.save(GCS_DS_Path + config.tpu_model_path + 'resnet50')
 
 if __name__ == '__main__':
   tf.logging.set_verbosity(tf.logging.INFO)
