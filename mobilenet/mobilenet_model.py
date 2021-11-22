@@ -8,7 +8,6 @@ import tensorflow as tf
 import numpy as np
 from tensorflow.keras.layers import Conv2D, DepthwiseConv2D,SeparableConv2D,BatchNormalization,AveragePooling2D,Activation,Dense
 from tensorflow.keras import Input
-import tensorflow_datasets as tfds
 import os
 
 '''Google MobileNet model for Keras.
