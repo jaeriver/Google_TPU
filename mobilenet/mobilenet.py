@@ -395,7 +395,7 @@ def main(unused_argv):
   params.lock()
 
   tpu_cluster_resolver = tf.distribute.cluster_resolver.TPUClusterResolver(
-      FLAGS.tpu if (config.['TPU_NAME']) else '',
+      FLAGS.tpu if (config['TPU_NAME']) else '',
       zone=FLAGS.tpu_zone,
       project=FLAGS.gcp_project)
 
