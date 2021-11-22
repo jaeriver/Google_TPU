@@ -77,7 +77,7 @@ def MobileNet(input_tensor=None, input_shape=None, alph=1, shallow=False, num_cl
     x = dw(x,'valid',int(1024*alph),2)
     x = dw(x,'same',int(1024*alph),1)
 
-    out = Dense(classes, activation='softmax')(x)
+    out = Dense(num_classes, activation='softmax')(x)
 
     if input_tensor is not None:
         inputs = get_source_inputs(input_tensor)
