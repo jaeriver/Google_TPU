@@ -1,10 +1,9 @@
-import tensorflow as tf
 from keras.applications.imagenet_utils import obtain_input_shape
 from keras import backend as K
 from keras.layers import Input, Convolution2D, \
     GlobalAveragePooling2D, Dense, BatchNormalization, Activation
 from keras.models import Model
-from tf.keras.engine.topology import get_source_inputs
+from tensorflow.keras.engine.topology import get_source_inputs
 from depthwise_conv2d import DepthwiseConvolution2D
 
 '''Google MobileNet model for Keras.
