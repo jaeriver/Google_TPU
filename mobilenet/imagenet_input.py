@@ -22,7 +22,7 @@ import os
 
 import tensorflow.compat.v1 as tf
 
-import resnet_preprocessing
+import mobilenet_preprocessing
 
 
 def image_serving_input_fn():
@@ -30,7 +30,7 @@ def image_serving_input_fn():
 
   def _preprocess_image(image_bytes):
     """Preprocess a single raw image."""
-    image = resnet_preprocessing.preprocess_image(
+    image = mobilenet_preprocessing.preprocess_image(
         image_bytes=image_bytes, is_training=False)
     return image
 
