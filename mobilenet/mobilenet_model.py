@@ -1,3 +1,4 @@
+import tensorflow as tf
 from keras.applications.imagenet_utils import obtain_input_shape
 from keras import backend as K
 from keras.layers import Input, Convolution2D, \
