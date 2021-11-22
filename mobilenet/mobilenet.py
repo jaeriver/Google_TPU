@@ -397,9 +397,8 @@ def main(unused_argv):
   params.lock()
 
   tpu_cluster_resolver = tf.distribute.cluster_resolver.TPUClusterResolver(
-      FLAGS.tpu if (config['TPU_NAME']) else '',
-      zone=FLAGS.tpu_zone,
-      project=FLAGS.gcp_project)
+      config['TPU_NAME'],
+      project=config['GCP_PROJECT'])
 
   if params.eval_total_size > 0:
     eval_size = params.eval_total_size
