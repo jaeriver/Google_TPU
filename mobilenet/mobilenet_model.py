@@ -134,4 +134,4 @@ def MobileNet(input_tensor=None, input_shape=None, alpha=1, shallow=False, class
 
 if __name__ == '__main__':
     m = MobileNet()
-    print(model ready)
+    print("model ready")
