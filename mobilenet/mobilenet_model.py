@@ -4,7 +4,6 @@ from keras.layers import Input, Convolution2D, \
     GlobalAveragePooling2D, Dense, BatchNormalization, Activation
 from keras.models import Model
 from keras.utils.layer_utils import get_source_inputs
-from depthwise_conv2d import DepthwiseConvolution2D
 
 '''Google MobileNet model for Keras.
 # Reference:
@@ -50,76 +49,28 @@ def MobileNet(input_tensor=None, input_shape=None, alpha=1, shallow=False, class
         else:
             img_input = input_tensor
 
-    x = Convolution2D(int(32 * alpha), (3, 3), strides=(2, 2), padding='same', use_bias=False)(img_input)
-    x = BatchNormalization()(x)
-    x = Activation('relu')(x)
-
-    x = DepthwiseConvolution2D(int(32 * alpha), (3, 3), strides=(1, 1), padding='same', use_bias=False)(x)
-    x = BatchNormalization()(x)
-    x = Activation('relu')(x)
-    x = Convolution2D(int(64 * alpha), (1, 1), strides=(1, 1), padding='same', use_bias=False)(x)
-    x = BatchNormalization()(x)
-    x = Activation('relu')(x)
-
-    x = DepthwiseConvolution2D(int(64 * alpha), (3, 3), strides=(2, 2), padding='same', use_bias=False)(x)
-    x = BatchNormalization()(x)
-    x = Activation('relu')(x)
-    x = Convolution2D(int(128 * alpha), (1, 1), strides=(1, 1), padding='same', use_bias=False)(x)
-    x = BatchNormalization()(x)
-    x = Activation('relu')(x)
-
-    x = DepthwiseConvolution2D(int(128 * alpha), (3, 3), strides=(1, 1), padding='same', use_bias=False)(x)
-    x = BatchNormalization()(x)
-    x = Activation('relu')(x)
-    x = Convolution2D(int(128 * alpha), (1, 1), strides=(1, 1), padding='same', use_bias=False)(x)
-    x = BatchNormalization()(x)
-    x = Activation('relu')(x)
-
-    x = DepthwiseConvolution2D(int(128 * alpha), (3, 3), strides=(2, 2), padding='same', use_bias=False)(x)
-    x = BatchNormalization()(x)
-    x = Activation('relu')(x)
-    x = Convolution2D(int(256 * alpha), (1, 1), strides=(1, 1), padding='same', use_bias=False)(x)
-    x = BatchNormalization()(x)
-    x = Activation('relu')(x)
-
-    x = DepthwiseConvolution2D(int(256 * alpha), (3, 3), strides=(1, 1), padding='same', use_bias=False)(x)
-    x = BatchNormalization()(x)
-    x = Activation('relu')(x)
-    x = Convolution2D(int(256 * alpha), (1, 1), strides=(1, 1), padding='same', use_bias=False)(x)
-    x = BatchNormalization()(x)
-    x = Activation('relu')(x)
-
-    x = DepthwiseConvolution2D(int(256 * alpha), (3, 3), strides=(2, 2), padding='same', use_bias=False)(x)
-    x = BatchNormalization()(x)
-    x = Activation('relu')(x)
-    x = Convolution2D(int(512 * alpha), (1, 1), strides=(1, 1), padding='same', use_bias=False)(x)
-    x = BatchNormalization()(x)
-    x = Activation('relu')(x)
-
-    if not shallow:
-        for _ in range(5):
-            x = DepthwiseConvolution2D(int(512 * alpha), (3, 3), strides=(1, 1), padding='same', use_bias=False)(x)
+    def dw(x,dw_pad,conv_f,conv_st):
+            x = DepthwiseConv2D(kernel_size=(3,3),padding = 'same')(x)
+            x = BatchNormalization()(x)
+            x = Activation('relu')(x) 
+            x = Conv2D(filters= conv_f,kernel_size=(1,1),strides=conv_st,padding='same')(x)
             x = BatchNormalization()(x)
             x = Activation('relu')(x)
-            x = Convolution2D(int(512 * alpha), (1, 1), strides=(1, 1), padding='same', use_bias=False)(x)
-            x = BatchNormalization()(x)
-            x = Activation('relu')(x)
+            return x
+    x = Conv2D(filters=int(32*alph),kernel_size=(3,3),strides=2,padding='same')(x)
+    x = BatchNormalization()(x)
+    x = Activation('relu')(x)
+    x = dw(x,'same',int(64*alph),1)
+    x = dw(x,'valid',int(128*alph),2)
+    x = dw(x,'same',int(128*alph),1)
+    x = dw(x,'same',int(256*alph),2)
+    x = dw(x,'same',int(256*alph),1)
+    x = dw(x,'valid',int(512*alph),2)
+    for i in range(5):
+        x = dw(x,'same',int(512*alph),1) 
+    x = dw(x,'valid',int(1024*alph),2)
+    x = dw(x,'same',int(1024*alph),1)
 
-    x = DepthwiseConvolution2D(int(512 * alpha), (3, 3), strides=(2, 2), padding='same', use_bias=False)(x)
-    x = BatchNormalization()(x)
-    x = Activation('relu')(x)
-    x = Convolution2D(int(1024 * alpha), (1, 1), strides=(1, 1), padding='same', use_bias=False)(x)
-    x = BatchNormalization()(x)
-    x = Activation('relu')(x)
-
-    x = DepthwiseConvolution2D(int(1024 * alpha), (3, 3), strides=(1, 1), padding='same', use_bias=False)(x)
-    x = BatchNormalization()(x)
-    x = Activation('relu')(x)
-    x = Convolution2D(int(1024 * alpha), (1, 1), strides=(1, 1), padding='same', use_bias=False)(x)
-    x = BatchNormalization()(x)
-    x = Activation('relu')(x)
-
-    x = GlobalAveragePooling2D()(x)
     out = Dense(classes, activation='softmax')(x)
 
     if input_tensor is not None:
