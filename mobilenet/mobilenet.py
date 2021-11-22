@@ -39,6 +39,8 @@ from hyperparameters import flags_to_params
 from hyperparameters import params_dict
 from configs import mobilenet_config
 
+import json
+
 config = json.loads(open('../tpu_info.json', 'r').read())
 
 common_tpu_flags.define_common_tpu_flags()
