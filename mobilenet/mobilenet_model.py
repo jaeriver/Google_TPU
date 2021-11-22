@@ -35,7 +35,7 @@ def MobileNet(input_tensor=None, input_shape=None, alpha=1, shallow=False, num_c
 
         """
 
-    input_shape = _obtain_input_shape(input_shape,
+    input_shape = obtain_input_shape(input_shape,
                                       default_size=224,
                                       min_size=96,
                                       data_format=K.image_data_format(),
