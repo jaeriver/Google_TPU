@@ -39,6 +39,8 @@ from hyperparameters import flags_to_params
 from hyperparameters import params_dict
 from configs import mobilenet_config
 
+config = json.loads(open('../tpu_info.json', 'r').read())
+
 common_tpu_flags.define_common_tpu_flags()
 common_hparams_flags.define_common_hparams_flags()
 
@@ -50,14 +52,14 @@ flags.DEFINE_string(
 
 flags.DEFINE_string(
     'export_dir',
-    default=None,
+    default=config['GCS_DS_PATH'] + config['tpu_model_path'],
     help=('The directory where the exported SavedModel will be stored.'))
 
 flags.DEFINE_integer(
-    'num_train_images', default=None, help='Size of training data set.')
+    'num_train_images', default=1320000, help='Size of training data set.')
 
 flags.DEFINE_integer(
-    'num_eval_images', default=None, help='Size of evaluation data set.')
+    'num_eval_images', default=50000, help='Size of evaluation data set.')
 
 flags.DEFINE_integer(
     'num_cores', None,
@@ -393,7 +395,7 @@ def main(unused_argv):
   params.lock()
 
   tpu_cluster_resolver = tf.distribute.cluster_resolver.TPUClusterResolver(
-      FLAGS.tpu if (FLAGS.tpu or params.use_tpu) else '',
+      FLAGS.tpu if (config.['TPU_NAME']) else '',
       zone=FLAGS.tpu_zone,
       project=FLAGS.gcp_project)
 
