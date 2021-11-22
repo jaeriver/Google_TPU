@@ -39,7 +39,7 @@ def MobileNet(input_tensor=None, input_shape=None, alpha=1, shallow=False, num_c
                                       default_size=224,
                                       min_size=96,
                                       data_format=K.image_data_format(),
-                                      include_top=True)
+                                      require_flatten=True)
 
     if input_tensor is None:
         img_input = Input(shape=input_shape)
