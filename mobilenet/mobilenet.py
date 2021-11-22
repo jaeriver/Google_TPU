@@ -15,7 +15,7 @@
 
 r"""MobileNet implemented with Keras running on Cloud TPUs.
 
-This file shows how you can run ResNet-50 on a Cloud TPU using the TensorFlow
+This file shows how you can run MobileNet on a Cloud TPU using the TensorFlow
 Keras support. This is configured for ImageNet (e.g. 1000 classes), but you can
 easily adapt to your own datasets by changing the code appropriately.
 """
@@ -188,8 +188,8 @@ def main(unused_argv):
   logging.info('Training model using data in directory "%s".', FLAGS.data)
 
   with strategy.scope():
-    logging.info('Building Keras ResNet-50 model')
-    model = resnet_model.MobileNet(num_classes=NUM_CLASSES)
+    logging.info('Building Keras MobileNetV1 model')
+    model = mobilenet_model.MobileNet(num_classes=NUM_CLASSES)
 
     logging.info('Compiling model.')
     metrics = ['sparse_categorical_accuracy']
