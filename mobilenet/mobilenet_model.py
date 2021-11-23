@@ -40,11 +40,12 @@ def MobileNet(input_tensor=None, input_shape=None, alph=1, shallow=False, num_cl
 
         """
 
-    input_shape = obtain_input_shape(input_shape,
-                                      default_size=224,
-                                      min_size=96,
-                                      data_format=K.image_data_format(),
-                                      require_flatten=True)
+    if tf.keras.backend.image_data_format() == 'channels_first':
+        input_shape = (3, 224, 224)
+        bn_axis = 1
+    else:
+        input_shape = (224, 224, 3)
+        bn_axis = 3
 
     if input_tensor is None:
         img_input = Input(shape=input_shape)
@@ -53,7 +54,7 @@ def MobileNet(input_tensor=None, input_shape=None, alph=1, shallow=False, num_cl
             img_input = Input(tensor=input_tensor, shape=input_shape)
         else:
             img_input = input_tensor
-
+    
     def dw(x,dw_pad,conv_f,conv_st):
             x = DepthwiseConv2D(kernel_size=(3,3),padding = 'same')(x)
             x = BatchNormalization()(x)
@@ -84,7 +85,7 @@ def MobileNet(input_tensor=None, input_shape=None, alph=1, shallow=False, num_cl
     else:
         inputs = img_input
 
-    return tf.keras.Model(img_input, x, name='mobilenet')
+    return tf.keras.Model(img_input, out, name='mobilenet')
 
 
 if __name__ == '__main__':
