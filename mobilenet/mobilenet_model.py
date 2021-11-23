@@ -10,6 +10,8 @@ from tensorflow.keras.layers import Conv2D, DepthwiseConv2D,SeparableConv2D,Batc
 from tensorflow.keras import Input
 import os
 
+from . import get_submodules_from_kwargs
+
 '''Google MobileNet model for Keras.
 # Reference:
 - [MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications](https://arxiv.org/pdf/1704.04861.pdf)
