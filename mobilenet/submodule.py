@@ -48,6 +48,3 @@ def correct_pad(backend, inputs, kernel_size):
             (correct[1] - adjust[1], correct[1]))
 
 __version__ = '1.0.8'
-
-from . import mobilenet_model
-from . import mobilenet
