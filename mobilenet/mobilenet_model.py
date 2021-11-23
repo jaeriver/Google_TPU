@@ -3,7 +3,7 @@ from imagenet_utils import _obtain_input_shape
 from tensorflow.keras.layers import Input, Convolution2D, \
     GlobalAveragePooling2D, Dense, BatchNormalization, Activation
 from tensorflow.keras.models import Model
-from tensorflow.keras.utils.layer_utils import get_source_inputs
+from tf.keras.utils.layer_utils import get_source_inputs
 import tensorflow as tf
 import numpy as np
 from tensorflow.keras.layers import Conv2D, DepthwiseConv2D,SeparableConv2D,BatchNormalization,AveragePooling2D,Activation,Dense
