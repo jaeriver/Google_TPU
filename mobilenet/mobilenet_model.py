@@ -165,7 +165,7 @@ def MobileNet(input_shape=None,
               weights='imagenet',
               input_tensor=None,
               pooling=None,
-              classes=1000,
+              num_classes=1000,
               **kwargs):
     """Instantiates the MobileNet architecture.
 
@@ -231,7 +231,7 @@ def MobileNet(input_shape=None,
                          '(pre-training on ImageNet), '
                          'or the path to the weights file to be loaded.')
 
-    if weights == 'imagenet' and include_top and classes != 1000:
+    if weights == 'imagenet' and include_top and num_classes != 1000:
         raise ValueError('If using `weights` as `"imagenet"` with `include_top` '
                          'as true, `classes` should be 1000')
 
@@ -322,10 +322,10 @@ def MobileNet(input_shape=None,
         x = layers.GlobalAveragePooling2D()(x)
         x = layers.Reshape(shape, name='reshape_1')(x)
         x = layers.Dropout(dropout, name='dropout')(x)
-        x = layers.Conv2D(classes, (1, 1),
+        x = layers.Conv2D(num_classes, (1, 1),
                           padding='same',
                           name='conv_preds')(x)
-        x = layers.Reshape((classes,), name='reshape_2')(x)
+        x = layers.Reshape((num_classes,), name='reshape_2')(x)
         x = layers.Activation('softmax', name='act_softmax')(x)
     else:
         if pooling == 'avg':
