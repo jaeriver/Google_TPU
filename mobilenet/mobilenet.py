@@ -32,7 +32,7 @@ from absl import logging
 import numpy as np
 import tensorflow.compat.v1 as tf
 
-from tensorflow.python.keras.optimizer_v2.adam import SGD
+from tensorflow.python.keras.optimizer_v2.sgd import SGD
 
 import imagenet_input
 import model_saving_utils
