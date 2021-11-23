@@ -199,7 +199,7 @@ def main(unused_argv):
       metrics.append(sparse_top_k_categorical_accuracy)
 
     model.compile(
-        optimizer=tf.keras.optimizers.Adam(learning_rate=0.001),
+        optimizer='adam',
         loss='sparse_categorical_crossentropy',
         metrics=metrics)
 
