@@ -10,7 +10,7 @@ from tensorflow.keras.layers import Conv2D, DepthwiseConv2D,SeparableConv2D,Batc
 from tensorflow.keras import Input
 import os
 
-from . import get_submodules_from_kwargs
+from submodule import get_submodules_from_kwargs
 
 '''Google MobileNet model for Keras.
 # Reference:
