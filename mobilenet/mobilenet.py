@@ -32,6 +32,8 @@ from absl import logging
 import numpy as np
 import tensorflow.compat.v1 as tf
 
+from tensorflow.python.keras.optimizer_v2.adam import SGD
+
 import imagenet_input
 import model_saving_utils
 import mobilenet_model
@@ -198,7 +200,7 @@ def main(unused_argv):
       metrics.append(sparse_top_k_categorical_accuracy)
 
     model.compile(
-        optimizer=keras.optimizers.SGD(),
+        optimizer=SGD(),
         loss='sparse_categorical_crossentropy',
         metrics=metrics)
 
