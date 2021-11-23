@@ -1,5 +1,5 @@
 from imagenet_utils import _obtain_input_shape
-from keras import backend as K
+
 from keras.layers import Input, Convolution2D, \
     GlobalAveragePooling2D, Dense, BatchNormalization, Activation
 from keras.models import Model
@@ -16,6 +16,11 @@ from submodule import get_submodules_from_kwargs
 # Reference:
 - [MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications](https://arxiv.org/pdf/1704.04861.pdf)
 '''
+
+backend = None
+layers = None
+models = None
+keras_utils = None
 
 def _conv_block(inputs, filters, alpha, kernel=(3, 3), strides=(1, 1)):
     """Adds an initial convolution layer (with batch normalization and relu6).
