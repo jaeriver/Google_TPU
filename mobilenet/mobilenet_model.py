@@ -1,4 +1,4 @@
-from keras.applications.imagenet_utils import obtain_input_shape
+from .imagenet_utils import _obtain_input_shape
 from keras import backend as K
 from keras.layers import Input, Convolution2D, \
     GlobalAveragePooling2D, Dense, BatchNormalization, Activation
