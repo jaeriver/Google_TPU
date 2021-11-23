@@ -83,8 +83,8 @@ def MobileNet(input_tensor=None, input_shape=None, alph=1, shallow=False, num_cl
         inputs = get_source_inputs(input_tensor)
     else:
         inputs = img_input
-
-    model = Model(inputs, out)
+    input_t = Input([None, 224, 224, 3], name="input")
+    model = Model(input_t, out)
 
     return model
 
