@@ -63,7 +63,7 @@ def MobileNet(input_tensor=None, input_shape=None, alph=1, shallow=False, num_cl
             x = BatchNormalization()(x)
             x = Activation('relu')(x)
             return x
-    x = inputs = Input(shape = (224,224,3), dtype=np.float32)
+    x = inputs = Input(shape = [224,224,3], dtype=np.float32)
     x = Conv2D(filters=int(32*alph),kernel_size=(3,3),strides=2,padding='same')(x)
     x = BatchNormalization()(x)
     x = Activation('relu')(x)
@@ -85,7 +85,7 @@ def MobileNet(input_tensor=None, input_shape=None, alph=1, shallow=False, num_cl
     else:
         inputs = img_input
 
-    return tf.keras.Model((224,224,3), out, name='mobilenet')
+    return tf.keras.Model([224,224,3], out, name='mobilenet')
 
 
 if __name__ == '__main__':
