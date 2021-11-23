@@ -117,7 +117,7 @@ def tpu_inference(model_type, batch_size):
 #   load_locally = tf.saved_model.LoadOptions(experimental_io_device='/job:localhost')
     load_start = time.time()
     with tpu_strategy.scope():
-        model_tpu = tf.saved_model.load(tpu_saved_model_name)
+        model_tpu = load_model(tpu_saved_model_name)
         load_time = time.time() - load_start
         counter = 0
     #     resname = list(model_tpu.fetch_tensors.keys())[0]
