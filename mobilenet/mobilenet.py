@@ -32,8 +32,6 @@ from absl import logging
 import numpy as np
 import tensorflow.compat.v1 as tf
 
-from tensorflow.python.keras.optimizer_v2.sgd import SGD
-
 import imagenet_input
 import model_saving_utils
 import mobilenet_model
@@ -198,9 +196,9 @@ def main(unused_argv):
 
     if FLAGS.eval_top_5_accuracy:
       metrics.append(sparse_top_k_categorical_accuracy)
-
+    nadam = tf.keras.optimizers.Nadam(lr=0.01)
     model.compile(
-        optimizer=SGD(),
+        optimizer=nadam,
         loss='sparse_categorical_crossentropy',
         metrics=metrics)
 
