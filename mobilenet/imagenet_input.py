@@ -67,7 +67,7 @@ class ImageNetInput(object):
   """
 
   def __init__(self, is_training, data_dir, batch_size, use_bfloat16=False):
-    self.image_preprocessing_fn = resnet_preprocessing.preprocess_image
+    self.image_preprocessing_fn = mobilenet_preprocessing.preprocess_image
     self.is_training = is_training
     self.use_bfloat16 = use_bfloat16
     self.data_dir = data_dir
