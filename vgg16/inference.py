@@ -10,8 +10,8 @@ import argparse
 import json
 config = json.loads(open('../tpu_info.json', 'r').read())
 
-PROJECT = config.GCP_PROJECT  #@param {type:"string"}
-BUCKET = config.GCS_DS_PATH  #@param {type:"string", default:"jddj"}
+PROJECT = config['GCP_PROJECT']  #@param {type:"string"}
+BUCKET = config['GCS_DS_PATH']  #@param {type:"string", default:"jddj"}
 NEW_MODEL = True #@param {type:"boolean"}
 MODEL_VERSION = "v1" #@param {type:"string"}
 assert PROJECT, 'For this part, you need a GCP project. Head to http://console.cloud.google.com/ and create one.'
@@ -65,7 +65,7 @@ def val_preprocessing(record):
     return image, label
 
 def get_dataset(batch_size, use_cache=False):
-    data_dir = BUCKET + config.valid_file
+    data_dir = BUCKET + config['valid_file']
     files = tf.io.gfile.glob(os.path.join(data_dir))
     dataset = tf.data.TFRecordDataset(files)
     
@@ -113,7 +113,7 @@ def tpu_inference(model_type, batch_size):
     display_threshold = display_every
     
     ds = get_dataset(batch_size)
-    tpu_saved_model_name = BUCKET + config.tpu_model_path + model_type
+    tpu_saved_model_name = BUCKET + config['tpu_model_path'] + model_type
 #   load_locally = tf.saved_model.LoadOptions(experimental_io_device='/job:localhost')
     load_start = time.time()
     with tpu_strategy.scope():
