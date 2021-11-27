@@ -33,12 +33,12 @@ def connect_to_tpu(tpu_address: str = None):
 config = json.loads(open('../tpu_info.json', 'r').read())
 
 AUTO = tf.data.experimental.AUTOTUNE
-GCS_DS_Path = config.GCS_DS_PATH
+GCS_DS_Path = config['GCS_DS_PATH']
 IMAGE_SIZE = [224, 224]
 
-train_file = tf.io.gfile.glob(GCS_DS_Path + config.train_file)
-test_file = tf.io.gfile.glob(GCS_DS_Path + config.test_file)
-valid_file = tf.io.gfile.glob(GCS_DS_Path + config.valid_file)
+train_file = tf.io.gfile.glob(GCS_DS_Path + config['train_file'])
+test_file = tf.io.gfile.glob(GCS_DS_Path + config['test_file'])
+valid_file = tf.io.gfile.glob(GCS_DS_Path + config['valid_file'])
 
 
 def decode_image(image_data):
@@ -199,4 +199,4 @@ history = model.fit(
     validation_data=ds_valid,
     epochs=5, steps_per_epoch=STEPS_PER_EPOCH
 )
-model.save(GCS_DS_Path + config.tpu_model_path + 'vgg16_xla')
+model.save(GCS_DS_Path + config['tpu_model_path'] + 'vgg16_xla')
