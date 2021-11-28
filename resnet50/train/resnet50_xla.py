@@ -197,7 +197,7 @@ def main(unused_argv):
     if FLAGS.eval_top_5_accuracy:
       metrics.append(sparse_top_k_categorical_accuracy)
     
-    tf.keras.backend.clear_session()
+#     tf.keras.backend.clear_session()
     tf.config.optimizer.set_jit(True)
     
     model.compile(
