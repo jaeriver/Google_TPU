@@ -36,7 +36,7 @@ import imagenet_input
 import model_saving_utils
 import resnet_model
 import json
-config = json.loads(open('../tpu_info.json', 'r').read())
+config = json.loads(open('../../tpu_info.json', 'r').read())
 
 # Common flags for TPU models.
 flags.DEFINE_string('tpu', config['TPU_NAME'], 'Name of the TPU to use.')
