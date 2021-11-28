@@ -229,7 +229,7 @@ def main(unused_argv):
       validation_steps=validation_steps,
       validation_freq=5)
 
-  model.save(config['GCS_DS_PATH'] + config['tpu_model_path'] + 'resnet50')
+  model.save(config['GCS_DS_PATH'] + config['tpu_model_path'] + 'resnet50_xla')
 
 if __name__ == '__main__':
   tf.logging.set_verbosity(tf.logging.INFO)
