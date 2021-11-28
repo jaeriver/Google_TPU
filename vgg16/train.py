@@ -33,7 +33,7 @@ def connect_to_tpu(tpu_address: str = None):
 config = json.loads(open('../tpu_info.json', 'r').read())
 
 AUTO = tf.data.experimental.AUTOTUNE
-GCS_DS_Path = config.GCS_DS_PATH
+GCS_DS_Path = config['GCS_DS_PATH']
 IMAGE_SIZE = [224, 224]
 
 train_file = tf.io.gfile.glob(GCS_DS_Path + config['train_file'])
