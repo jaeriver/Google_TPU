@@ -36,6 +36,9 @@ import imagenet_input
 import model_saving_utils
 import resnet_model
 import json
+
+tf.keras.backend.clear_session()
+
 config = json.loads(open('../../tpu_info.json', 'r').read())
 
 # Common flags for TPU models.
@@ -186,7 +189,7 @@ def main(unused_argv):
   logging.info('Use global batch size: %s.', batch_size)
   logging.info('Enable top 5 accuracy: %s.', FLAGS.eval_top_5_accuracy)
   logging.info('Training model using data in directory "%s".', FLAGS.data)
-
+    
   with strategy.scope():
     logging.info('Building Keras ResNet-50 model')
     model = resnet_model.ResNet50(num_classes=NUM_CLASSES)
