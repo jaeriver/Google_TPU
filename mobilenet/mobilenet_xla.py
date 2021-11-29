@@ -228,7 +228,7 @@ def main(unused_argv):
       validation_steps=validation_steps,
       validation_freq=5)
 
-  model.save(config['GCS_DS_PATH'] + config['tpu_model_path'] + 'mobilenet')
+  model.save(config['GCS_DS_PATH'] + config['tpu_model_path'] + 'mobilenet_xla')
 
 if __name__ == '__main__':
   app.run(main)
