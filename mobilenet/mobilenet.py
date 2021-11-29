@@ -229,5 +229,4 @@ def main(unused_argv):
   model.save(config['GCS_DS_PATH'] + config['tpu_model_path'] + 'mobilenet')
 
 if __name__ == '__main__':
-  tf.logging.set_verbosity(tf.logging.INFO)
   app.run(main)
