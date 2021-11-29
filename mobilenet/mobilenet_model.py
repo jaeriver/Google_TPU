@@ -3,7 +3,6 @@ from imagenet_utils import _obtain_input_shape
 from tensorflow.keras.layers import Input, Convolution2D, \
     GlobalAveragePooling2D, Dense, BatchNormalization, Activation
 from tensorflow.keras.models import Model
-from tensorflow.keras.utils.layer_utils import get_source_inputs
 import tensorflow as tf
 import numpy as np
 from tensorflow.keras.layers import Conv2D, DepthwiseConv2D,SeparableConv2D,BatchNormalization,AveragePooling2D,Activation,Dense
@@ -340,10 +339,7 @@ def MobileNet(input_shape=None,
 
     # Ensure that the model takes into account
     # any potential predecessors of `input_tensor`.
-    if input_tensor is not None:
-        inputs = keras_utils.get_source_inputs(input_tensor)
-    else:
-        inputs = img_input
+    inputs = img_input
 
     # Create model.
     model = models.Model(inputs, x, name='mobilenet_%0.2f_%s' % (alpha, rows))
