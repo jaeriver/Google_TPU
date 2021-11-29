@@ -161,7 +161,7 @@ def sparse_top_k_categorical_accuracy(y_true, y_pred, k=5):
     y_true = tf.squeeze(y_true, [-1])
 
   y_true = tf.cast(y_true, 'int32')
-  return tf.nn.in_top_k(y_pred, y_true, k)
+  return tf.math.in_top_k(y_pred, y_true, k)
 
 
 def main(unused_argv):
