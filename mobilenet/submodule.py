@@ -8,6 +8,8 @@ _KERAS_BACKEND = None
 _KERAS_LAYERS = None
 _KERAS_MODELS = None
 _KERAS_UTILS = None
+
+import tensorflow as tf
 from tf.keras import backend
 from tf.keras import layers
 from tf.keras import models
