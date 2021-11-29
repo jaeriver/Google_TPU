@@ -8,10 +8,10 @@ _KERAS_BACKEND = None
 _KERAS_LAYERS = None
 _KERAS_MODELS = None
 _KERAS_UTILS = None
-from keras import backend
-from keras import layers
-from keras import models
-from keras import utils
+from tf.keras import backend
+from tf.keras import layers
+from tf.keras import models
+from tf.keras import utils
 
 
 def get_submodules_from_kwargs(kwargs):
