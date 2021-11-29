@@ -9,11 +9,10 @@ _KERAS_LAYERS = None
 _KERAS_MODELS = None
 _KERAS_UTILS = None
 
-import tensorflow as tf
-from tf.keras import backend
-from tf.keras import layers
-from tf.keras import models
-from tf.keras import utils
+from tensorflow.keras import backend
+from tensorflow.keras import layers
+from tensorflow.keras import models
+from tensorflow.keras import utils
 
 
 def get_submodules_from_kwargs(kwargs):
